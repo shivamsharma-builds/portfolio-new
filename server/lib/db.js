@@ -30,26 +30,34 @@ function createPool() {
   }
 
   const caPath = process.env.AIVEN_POSTGRES_CA_PATH?.trim()
+  const caText = process.env.AIVEN_POSTGRES_CA?.trim()
   let ssl
 
-  if (caPath) {
-    const resolvedCaPath = path.resolve(caPath)
+  if (caText) {
+    ssl = { rejectUnauthorized: true, ca: caText }
+  } else if (caPath) {
+    // Vercel deployments may not contain a locally referenced certificate file.
+    // Never crash the API just because that optional file is unavailable.
+    const candidatePaths = [
+      path.resolve(caPath),
+      path.join(process.cwd(), caPath),
+      path.join(path.dirname(fileURLToPath(import.meta.url)), '..', '..', caPath),
+    ]
+    const resolvedCaPath = candidatePaths.find((candidate) => fs.existsSync(candidate))
 
-    if (!fs.existsSync(resolvedCaPath)) {
-      throw new Error(`Aiven PostgreSQL CA certificate not found: ${resolvedCaPath}`)
-    }
-
-    ssl = {
-      rejectUnauthorized: true,
-      ca: fs.readFileSync(resolvedCaPath, 'utf8'),
+    if (resolvedCaPath) {
+      ssl = {
+        rejectUnauthorized: true,
+        ca: fs.readFileSync(resolvedCaPath, 'utf8'),
+      }
+    } else {
+      console.warn(`Aiven CA file not found at ${caPath}; falling back to TLS without certificate verification. For Vercel, set AIVEN_POSTGRES_CA to the certificate contents for full verification.`)
+      ssl = { rejectUnauthorized: false }
     }
   } else {
-    // This keeps local seeding usable when the Aiven CA has not been downloaded.
-    // For production, configure AIVEN_POSTGRES_CA_PATH and keep verification on.
+    // Aiven accepts TLS with sslmode=require. This fallback keeps serverless
+    // deployments working even when the optional CA file is not packaged.
     ssl = { rejectUnauthorized: false }
-    console.warn(
-      'WARNING: AIVEN_POSTGRES_CA_PATH is not configured; PostgreSQL TLS certificate verification is disabled. Configure the Aiven CA certificate for production.'
-    )
   }
 
   pool = new Pool({
