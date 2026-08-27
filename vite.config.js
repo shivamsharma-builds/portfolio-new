@@ -4,11 +4,10 @@ import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
   plugins: [tailwindcss(), react()],
-  build: {
-    sourcemap: false,
-    cssCodeSplit: true,
-    // Keep the warning useful while allowing the current animation stack.
-    // This does not increase the bundle size; it only adjusts the warning threshold.
-    chunkSizeWarningLimit: 600,
+  server: {
+    proxy: {
+      '/api': 'http://localhost:5000',
+    },
   },
+  build: { sourcemap: false, cssCodeSplit: true, chunkSizeWarningLimit: 600 },
 })

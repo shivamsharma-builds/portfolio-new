@@ -30,6 +30,7 @@ body {
   --text-muted: #94a3b8;
   --glass-bg: rgba(15, 23, 42, 0.58);
   --glass-border: rgba(255, 255, 255, 0.11);
+  --accent-orange: #f97316;
 }
 
 body {
@@ -88,8 +89,8 @@ p, li, label {
 
 .card-hover:hover {
   transform: translateY(-6px);
-  border-color: rgba(168, 85, 247, 0.32);
-  box-shadow: 0 20px 55px rgba(0, 0, 0, 0.3), 0 0 35px rgba(168, 85, 247, 0.08);
+  border-color: rgba(249, 115, 22, 0.45);
+  box-shadow: 0 20px 55px rgba(0, 0, 0, 0.3);
 }
 
 .resume-modal-backdrop {
@@ -126,10 +127,7 @@ p, li, label {
 
 
 .gradient-text {
-  background: linear-gradient(90deg, #c084fc 0%, #22d3ee 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent !important;
+  color: var(--accent-orange) !important;
 }
 
 .animate-float {

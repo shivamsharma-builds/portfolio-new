@@ -1,27 +1,2 @@
-import mongoose from 'mongoose'
-import { connectDatabase } from '../server/lib/db.js'
-
-export default async function handler(req, res) {
-  if (req.method !== 'GET') {
-    res.setHeader('Allow', 'GET')
-    return res.status(405).json({ error: `Method ${req.method} not allowed.` })
-  }
-
-  try {
-    await connectDatabase()
-    return res.status(200).json({
-      status: mongoose.connection.readyState === 1 ? 'ok' : 'degraded',
-      service: 'portfolio-api',
-      database: mongoose.connection.readyState === 1 ? 'mongodb' : 'disconnected',
-      timestamp: new Date().toISOString(),
-    })
-  } catch (error) {
-    console.error('Health check failed:', error.message)
-    return res.status(503).json({
-      status: 'degraded',
-      service: 'portfolio-api',
-      database: 'disconnected',
-      timestamp: new Date().toISOString(),
-    })
-  }
-}
+import { initializeDatabase } from '../server/lib/db.js'
+export default async function handler(_req,res) { try { await initializeDatabase(); return res.json({ status:'ok', service:'portfolio-api', database:'aiven-postgresql', timestamp:new Date().toISOString() }) } catch (error) { console.error(error); return res.status(503).json({ status:'degraded', service:'portfolio-api', database:'disconnected', timestamp:new Date().toISOString() }) } }

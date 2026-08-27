@@ -23,7 +23,7 @@ const ResumeModal = ({ isOpen, onClose }) => {
             <a
               href="/resume.pdf"
               download
-              className="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-purple-600 to-cyan-600 text-white text-sm font-semibold hover:scale-[1.03] transition-transform"
+              className="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-500 text-white text-sm font-semibold hover:scale-[1.03] transition-transform"
             >
               <FiDownload /> Download
             </a>
