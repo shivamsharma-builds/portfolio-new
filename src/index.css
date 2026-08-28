@@ -150,3 +150,23 @@ p, li, label {
 
 .delay-500 { animation-delay: 500ms; }
 .delay-1000 { animation-delay: 1000ms; }
+
+
+/* Mobile overflow protection for forms and long user/content values. */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+img, svg, video, canvas {
+  max-width: 100%;
+}
+
+@media (max-width: 639px) {
+  input, textarea, select, button {
+    max-width: 100%;
+  }
+
+  textarea {
+    overflow-wrap: anywhere;
+  }
+}
