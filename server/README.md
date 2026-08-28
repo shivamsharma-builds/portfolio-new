@@ -4,9 +4,9 @@ This directory contains the backend code for my personal portfolio website. It i
 
 ## Stack
 
-*   **Framework**: Express.js
-*   **Database**: MongoDB Atlas with Mongoose for object data modeling.
-*   **Email**: Nodemailer for sending contact form confirmation emails.
+- **Framework**: Express.js
+- **Database**: MongoDB Atlas with Mongoose for object data modeling.
+- **Email**: Nodemailer for sending contact form confirmation emails.
 
 ## Project Structure
 

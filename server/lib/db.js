@@ -1,63 +1,73 @@
-import pg from 'pg'
-import fs from 'node:fs'
-import path from 'node:path'
-import { fileURLToPath } from 'node:url'
+import pg from "pg";
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 
-const { Pool } = pg
-let pool
-let initialized = false
+const { Pool } = pg;
+let pool;
+let initialized = false;
 
 function createPool() {
-  if (pool) return pool
+  if (pool) return pool;
 
-  const rawConnectionString = process.env.DATABASE_URL || process.env.AIVEN_POSTGRES_URL
+  const rawConnectionString =
+    process.env.DATABASE_URL || process.env.AIVEN_POSTGRES_URL;
   if (!rawConnectionString) {
-    throw new Error('DATABASE_URL/AIVEN_POSTGRES_URL is not configured.')
+    throw new Error("DATABASE_URL/AIVEN_POSTGRES_URL is not configured.");
   }
 
   // pg v8 gives SSL query-string options (such as sslmode=require) precedence
   // over the `ssl` object. Remove those options so our explicit TLS settings
   // below are actually used.
-  const connectionUrl = new URL(rawConnectionString)
+  const connectionUrl = new URL(rawConnectionString);
   for (const key of [
-    'sslmode',
-    'sslcert',
-    'sslkey',
-    'sslrootcert',
-    'uselibpqcompat',
+    "sslmode",
+    "sslcert",
+    "sslkey",
+    "sslrootcert",
+    "uselibpqcompat",
   ]) {
-    connectionUrl.searchParams.delete(key)
+    connectionUrl.searchParams.delete(key);
   }
 
-  const caPath = process.env.AIVEN_POSTGRES_CA_PATH?.trim()
-  const caText = process.env.AIVEN_POSTGRES_CA?.trim()
-  let ssl
+  const caPath = process.env.AIVEN_POSTGRES_CA_PATH?.trim();
+  const caText = process.env.AIVEN_POSTGRES_CA?.trim();
+  let ssl;
 
   if (caText) {
-    ssl = { rejectUnauthorized: true, ca: caText }
+    ssl = { rejectUnauthorized: true, ca: caText };
   } else if (caPath) {
     // Vercel deployments may not contain a locally referenced certificate file.
     // Never crash the API just because that optional file is unavailable.
     const candidatePaths = [
       path.resolve(caPath),
       path.join(process.cwd(), caPath),
-      path.join(path.dirname(fileURLToPath(import.meta.url)), '..', '..', caPath),
-    ]
-    const resolvedCaPath = candidatePaths.find((candidate) => fs.existsSync(candidate))
+      path.join(
+        path.dirname(fileURLToPath(import.meta.url)),
+        "..",
+        "..",
+        caPath,
+      ),
+    ];
+    const resolvedCaPath = candidatePaths.find((candidate) =>
+      fs.existsSync(candidate),
+    );
 
     if (resolvedCaPath) {
       ssl = {
         rejectUnauthorized: true,
-        ca: fs.readFileSync(resolvedCaPath, 'utf8'),
-      }
+        ca: fs.readFileSync(resolvedCaPath, "utf8"),
+      };
     } else {
-      console.warn(`Aiven CA file not found at ${caPath}; falling back to TLS without certificate verification. For Vercel, set AIVEN_POSTGRES_CA to the certificate contents for full verification.`)
-      ssl = { rejectUnauthorized: false }
+      console.warn(
+        `Aiven CA file not found at ${caPath}; falling back to TLS without certificate verification. For Vercel, set AIVEN_POSTGRES_CA to the certificate contents for full verification.`,
+      );
+      ssl = { rejectUnauthorized: false };
     }
   } else {
     // Aiven accepts TLS with sslmode=require. This fallback keeps serverless
     // deployments working even when the optional CA file is not packaged.
-    ssl = { rejectUnauthorized: false }
+    ssl = { rejectUnauthorized: false };
   }
 
   pool = new Pool({
@@ -65,24 +75,24 @@ function createPool() {
     ssl,
     max: Number(process.env.PG_POOL_MAX || 5),
     idleTimeoutMillis: 30000,
-  })
+  });
 
-  return pool
+  return pool;
 }
 
 export async function dbQuery(text, params = []) {
-  return createPool().query(text, params)
+  return createPool().query(text, params);
 }
 
 export async function connectDatabase() {
-  const client = await createPool().connect()
-  client.release()
-  return pool
+  const client = await createPool().connect();
+  client.release();
+  return pool;
 }
 
 export async function initializeDatabase() {
-  if (initialized) return
-  await connectDatabase()
+  if (initialized) return;
+  await connectDatabase();
   await dbQuery(`
     CREATE TABLE IF NOT EXISTS site_settings (
       id INTEGER PRIMARY KEY CHECK (id = 1),
@@ -122,6 +132,6 @@ export async function initializeDatabase() {
       created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
       updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
     );
-  `)
-  initialized = true
+  `);
+  initialized = true;
 }
