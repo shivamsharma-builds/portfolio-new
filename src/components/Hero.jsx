@@ -1,10 +1,124 @@
-import { motion } from 'framer-motion'
-import { FiDownload, FiMail, FiArrowDown } from 'react-icons/fi'
-import { FaGithub, FaLinkedin, FaTwitter, FaInstagram } from 'react-icons/fa'
-import { useSiteData } from '../lib/SiteDataContext'
+import { motion } from "framer-motion";
+import { FiDownload, FiMail, FiArrowDown } from "react-icons/fi";
+import { FaGithub, FaLinkedin, FaTwitter, FaInstagram } from "react-icons/fa";
+import { useSiteData } from "../lib/SiteDataContext";
 
-const socialIcon = { github: FaGithub, linkedin: FaLinkedin, twitter: FaTwitter, instagram: FaInstagram }
+const socialIcon = {
+  github: FaGithub,
+  linkedin: FaLinkedin,
+  twitter: FaTwitter,
+  instagram: FaInstagram,
+};
 export default function Hero() {
-  const { settings, socials } = useSiteData(); const openResume = (e) => { e.preventDefault(); window.dispatchEvent(new Event('open-resume')) }
-  return <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden pt-24 px-6"><div className="container mx-auto"><div className="flex flex-col lg:flex-row items-center justify-between gap-12"><motion.div className="flex-1 text-center lg:text-left" initial={{opacity:0,x:-45}} animate={{opacity:1,x:0}} transition={{duration:.9}}><div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-6"><span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"/><span className="text-sm text-gray-300">{settings.heroBadge}</span></div><h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-4">Hi, I'm <span className="gradient-text">{settings.name}</span></h1><h2 className="text-2xl md:text-3xl text-gray-400 mb-6 font-light">{settings.role}</h2><p className="text-gray-400 text-lg max-w-2xl mb-8 leading-relaxed">{settings.heroDescription}</p><div className="flex flex-wrap gap-4 justify-center lg:justify-start mb-8"><a href="/resume.pdf" onClick={openResume} className="flex items-center gap-2 px-8 py-4 bg-orange-500 rounded-full text-white font-semibold hover:shadow-lg transition-all hover:scale-105"><FiDownload className="text-xl"/> Download CV</a><a href="#contact" className="flex items-center gap-2 px-8 py-4 glass rounded-full text-white font-semibold hover:bg-white/10 transition-all hover:scale-105"><FiMail className="text-xl"/> Contact Me</a></div><div className="flex gap-4 justify-center lg:justify-start">{socials.map((s) => { const Icon = socialIcon[s.icon] || FaGithub; return <a key={s.id || s.name} href={s.url} target="_blank" rel="noopener noreferrer" className="w-12 h-12 glass rounded-full flex items-center justify-center text-xl text-gray-400 hover:text-white transition-all hover:scale-110"><Icon/></a> })}</div></motion.div><motion.div className="flex-1 flex justify-center" initial={{opacity:0,scale:.88,y:30}} animate={{opacity:1,scale:1,y:0}} transition={{duration:1,delay:.15}}><motion.div className="relative" animate={{y:[0,-12,0]}} transition={{duration:4.5,repeat:Infinity,ease:'easeInOut'}}><div className="absolute inset-0 bg-orange-500 rounded-full blur-2xl opacity-50 animate-pulse"/><div className="relative w-72 h-72 md:w-96 md:h-96 rounded-full overflow-hidden border-4 border-orange-500/30 animate-float"><img src={settings.profileImage1} alt="Profile" className="w-full h-full object-cover" fetchPriority="high"/></div><div className="absolute -top-4 -right-4 glass rounded-2xl px-4 py-2 animate-bounce-slow"><span className="text-2xl">💻</span></div><div className="absolute -bottom-4 -left-4 glass rounded-2xl px-4 py-2 animate-float"><span className="text-2xl">🎓</span></div><div className="absolute top-1/2 -left-8 glass rounded-2xl px-3 py-2 animate-float delay-500"><span className="text-2xl">🚀</span></div></motion.div></motion.div></div><motion.div className="absolute bottom-8 left-1/2 -translate-x-1/2" animate={{y:[0,8,0],opacity:[.5,1,.5]}} transition={{duration:1.8,repeat:Infinity}}><FiArrowDown className="text-2xl text-gray-500"/></motion.div></div></section>
+  const { settings, socials } = useSiteData();
+  const openResume = (e) => {
+    e.preventDefault();
+    window.dispatchEvent(new Event("open-resume"));
+  };
+  return (
+    <section
+      id="home"
+      className="min-h-screen flex items-center justify-center relative overflow-hidden pt-24 px-6"
+    >
+      <div className="container mx-auto">
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
+          <motion.div
+            className="flex-1 text-center lg:text-left"
+            initial={{ opacity: 0, x: -45 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.9 }}
+          >
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-6">
+              <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+              <span className="text-sm text-gray-300">
+                {settings.heroBadge}
+              </span>
+            </div>
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-4">
+              Hi, I'm <span className="gradient-text">{settings.name}</span>
+            </h1>
+            <h2 className="text-2xl md:text-3xl text-gray-400 mb-6 font-light">
+              {settings.role}
+            </h2>
+            <p className="text-gray-400 text-lg max-w-2xl mb-8 leading-relaxed">
+              {settings.heroDescription}
+            </p>
+            <div className="flex flex-wrap gap-4 justify-center lg:justify-start mb-8">
+              <a
+                href="/resume.pdf"
+                onClick={openResume}
+                className="flex items-center gap-2 px-8 py-4 bg-orange-500 rounded-full text-white font-semibold hover:shadow-lg transition-all hover:scale-105"
+              >
+                <FiDownload className="text-xl" /> Download CV
+              </a>
+              <a
+                href="#contact"
+                className="flex items-center gap-2 px-8 py-4 glass rounded-full text-white font-semibold hover:bg-white/10 transition-all hover:scale-105"
+              >
+                <FiMail className="text-xl" /> Contact Me
+              </a>
+            </div>
+            <div className="flex gap-4 justify-center lg:justify-start">
+              {socials.map((s) => {
+                const Icon = socialIcon[s.icon] || FaGithub;
+                return (
+                  <a
+                    key={s.id || s.name}
+                    href={s.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-12 h-12 glass rounded-full flex items-center justify-center text-xl text-gray-400 hover:text-white transition-all hover:scale-110"
+                  >
+                    <Icon />
+                  </a>
+                );
+              })}
+            </div>
+          </motion.div>
+          <motion.div
+            className="flex-1 flex justify-center"
+            initial={{ opacity: 0, scale: 0.88, y: 30 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.15 }}
+          >
+            <motion.div
+              className="relative"
+              animate={{ y: [0, -12, 0] }}
+              transition={{
+                duration: 4.5,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            >
+              <div className="absolute inset-0 bg-orange-500 rounded-full blur-2xl opacity-50 animate-pulse" />
+              <div className="relative w-72 h-72 md:w-96 md:h-96 rounded-full overflow-hidden border-4 border-orange-500/30 animate-float">
+                <img
+                  src={settings.profileImage1}
+                  alt="Profile"
+                  className="w-full h-full object-cover"
+                  fetchPriority="high"
+                />
+              </div>
+              <div className="absolute -top-4 -right-4 glass rounded-2xl px-4 py-2 animate-bounce-slow">
+                <span className="text-2xl">💻</span>
+              </div>
+              <div className="absolute -bottom-4 -left-4 glass rounded-2xl px-4 py-2 animate-float">
+                <span className="text-2xl">🎓</span>
+              </div>
+              <div className="absolute top-1/2 -left-8 glass rounded-2xl px-3 py-2 animate-float delay-500">
+                <span className="text-2xl">🚀</span>
+              </div>
+            </motion.div>
+          </motion.div>
+        </div>
+        <motion.div
+          className="absolute bottom-8 left-1/2 -translate-x-1/2"
+          animate={{ y: [0, 8, 0], opacity: [0.5, 1, 0.5] }}
+          transition={{ duration: 1.8, repeat: Infinity }}
+        >
+          <FiArrowDown className="text-2xl text-gray-500" />
+        </motion.div>
+      </div>
+    </section>
+  );
 }

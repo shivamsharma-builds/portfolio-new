@@ -1,7 +1,7 @@
-import { FiDownload, FiX } from 'react-icons/fi'
+import { FiDownload, FiX } from "react-icons/fi";
 
 const ResumeModal = ({ isOpen, onClose }) => {
-  if (!isOpen) return null
+  if (!isOpen) return null;
 
   return (
     <div
@@ -10,14 +10,16 @@ const ResumeModal = ({ isOpen, onClose }) => {
       aria-modal="true"
       aria-label="Resume preview"
       onMouseDown={(event) => {
-        if (event.target === event.currentTarget) onClose()
+        if (event.target === event.currentTarget) onClose();
       }}
     >
       <div className="resume-modal-panel glass-strong w-full max-w-5xl h-[88vh] rounded-2xl overflow-hidden flex flex-col">
         <div className="flex items-center justify-between gap-4 px-5 py-4 border-b border-white/10">
           <div>
             <h2 className="text-lg font-semibold text-white">Resume Preview</h2>
-            <p className="text-xs text-slate-400 mt-0.5">Review your resume before downloading.</p>
+            <p className="text-xs text-slate-400 mt-0.5">
+              Review your resume before downloading.
+            </p>
           </div>
           <div className="flex items-center gap-2">
             <a
@@ -47,7 +49,7 @@ const ResumeModal = ({ isOpen, onClose }) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ResumeModal
+export default ResumeModal;

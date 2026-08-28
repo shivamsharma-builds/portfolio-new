@@ -1,4 +1,112 @@
-import { motion } from 'framer-motion'
-import { FiGithub, FiExternalLink } from 'react-icons/fi'
-import { useSiteData } from '../lib/SiteDataContext'
-export default function Projects(){const {projects}=useSiteData();return <section id="projects" className="py-20 px-6 section-fade gsap-section"><div className="container mx-auto"><div className="text-center mb-16"><h2 className="text-4xl md:text-5xl font-bold mb-4">My <span className="gradient-text">Projects</span></h2><div className="w-20 h-1 bg-orange-500 mx-auto rounded-full"/><p className="text-gray-400 mt-4 max-w-2xl mx-auto">Here are some of the projects I've worked on. Each project represents my passion for building meaningful solutions.</p></div><div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">{projects.map((project,i)=><motion.div key={project.id||i} initial={{opacity:0,y:45}} whileInView={{opacity:1,y:0}} viewport={{once:true,amount:.15}} transition={{duration:.65,delay:i*.07}} whileHover={{y:-12}} className="glass rounded-2xl overflow-hidden card-hover group"><div className="relative h-56 overflow-hidden"><img src={project.image} alt={project.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"/><div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0f] via-transparent to-transparent"/>{project.featured&&<div className="absolute top-4 right-4 px-3 py-1 bg-orange-500 rounded-full text-xs font-semibold text-white">⭐ Featured</div>}<div className="absolute inset-0 bg-black/75 opacity-0 group-hover:opacity-100 transition-all flex items-center justify-center gap-4"><a href={project.github} target="_blank" rel="noopener noreferrer" className="w-12 h-12 glass rounded-full flex items-center justify-center text-white hover:bg-orange-500"><FiGithub/></a><a href={project.demo} target="_blank" rel="noopener noreferrer" className="w-12 h-12 glass rounded-full flex items-center justify-center text-white hover:bg-orange-500"><FiExternalLink/></a></div></div><div className="p-5 sm:p-6 min-w-0"><h3 className="text-xl font-bold mb-2 text-white group-hover:text-orange-400 break-words">{project.title}</h3><p className="text-gray-400 text-sm mb-4 break-words">{project.description}</p><div className="flex flex-wrap gap-2">{(Array.isArray(project.tags)?project.tags:[]).map(t=><span key={t} className="px-3 py-1 glass rounded-full text-xs text-gray-300">{t}</span>)}</div><div className="md:hidden flex flex-col xs:flex-row sm:flex-row gap-3 mt-5">{project.github&&<a href={project.github} target="_blank" rel="noopener noreferrer" aria-label={`View ${project.title} on GitHub`} className="min-h-11 flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-orange-500 px-4 py-3 text-sm font-semibold text-white transition hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-[#0a0a0f]"><FiGithub className="shrink-0"/> <span>GitHub</span></a>}{project.demo&&<a href={project.demo} target="_blank" rel="noopener noreferrer" aria-label={`Open live demo of ${project.title}`} className="min-h-11 flex-1 inline-flex items-center justify-center gap-2 rounded-xl border border-orange-500 bg-orange-500 px-4 py-3 text-sm font-semibold text-white transition hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-[#0a0a0f]"><FiExternalLink className="shrink-0"/> <span>Live Demo</span></a>}</div></div></motion.div>)}</div></div></section>}
+import { motion } from "framer-motion";
+import { FiGithub, FiExternalLink } from "react-icons/fi";
+import { useSiteData } from "../lib/SiteDataContext";
+export default function Projects() {
+  const { projects } = useSiteData();
+  return (
+    <section id="projects" className="py-20 px-6 section-fade gsap-section">
+      <div className="container mx-auto">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">
+            My <span className="gradient-text">Projects</span>
+          </h2>
+          <div className="w-20 h-1 bg-orange-500 mx-auto rounded-full" />
+          <p className="text-gray-400 mt-4 max-w-2xl mx-auto">
+            Here are some of the projects I've worked on. Each project
+            represents my passion for building meaningful solutions.
+          </p>
+        </div>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {projects.map((project, i) => (
+            <motion.div
+              key={project.id || i}
+              initial={{ opacity: 0, y: 45 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.15 }}
+              transition={{ duration: 0.65, delay: i * 0.07 }}
+              whileHover={{ y: -12 }}
+              className="glass rounded-2xl overflow-hidden card-hover group"
+            >
+              <div className="relative h-56 overflow-hidden">
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0f] via-transparent to-transparent" />
+                {project.featured && (
+                  <div className="absolute top-4 right-4 px-3 py-1 bg-orange-500 rounded-full text-xs font-semibold text-white">
+                    ⭐ Featured
+                  </div>
+                )}
+                <div className="absolute inset-0 bg-black/75 opacity-0 group-hover:opacity-100 transition-all flex items-center justify-center gap-4">
+                  <a
+                    href={project.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-12 h-12 glass rounded-full flex items-center justify-center text-white hover:bg-orange-500"
+                  >
+                    <FiGithub />
+                  </a>
+                  <a
+                    href={project.demo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-12 h-12 glass rounded-full flex items-center justify-center text-white hover:bg-orange-500"
+                  >
+                    <FiExternalLink />
+                  </a>
+                </div>
+              </div>
+              <div className="p-5 sm:p-6 min-w-0">
+                <h3 className="text-xl font-bold mb-2 text-white group-hover:text-orange-400 break-words">
+                  {project.title}
+                </h3>
+                <p className="text-gray-400 text-sm mb-4 break-words">
+                  {project.description}
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {(Array.isArray(project.tags) ? project.tags : []).map(
+                    (t) => (
+                      <span
+                        key={t}
+                        className="px-3 py-1 glass rounded-full text-xs text-gray-300"
+                      >
+                        {t}
+                      </span>
+                    ),
+                  )}
+                </div>
+                <div className="md:hidden flex flex-col xs:flex-row sm:flex-row gap-3 mt-5">
+                  {project.github && (
+                    <a
+                      href={project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`View ${project.title} on GitHub`}
+                      className="min-h-11 flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-orange-500 px-4 py-3 text-sm font-semibold text-white transition hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-[#0a0a0f]"
+                    >
+                      <FiGithub className="shrink-0" /> <span>GitHub</span>
+                    </a>
+                  )}
+                  {project.demo && (
+                    <a
+                      href={project.demo}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`Open live demo of ${project.title}`}
+                      className="min-h-11 flex-1 inline-flex items-center justify-center gap-2 rounded-xl border border-orange-500 bg-orange-500 px-4 py-3 text-sm font-semibold text-white transition hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-[#0a0a0f]"
+                    >
+                      <FiExternalLink className="shrink-0" />{" "}
+                      <span>Live Demo</span>
+                    </a>
+                  )}
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}

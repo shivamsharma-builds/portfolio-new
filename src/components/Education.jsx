@@ -1,3 +1,68 @@
-import { FiCalendar, FiMapPin, FiBook } from 'react-icons/fi'
-import { useSiteData } from '../lib/SiteDataContext'
-export default function Education(){const {education}=useSiteData();return <section id="education" className="py-20 px-6 section-fade gsap-section"><div className="container mx-auto"><div className="text-center mb-16"><h2 className="text-4xl md:text-5xl font-bold mb-4">My <span className="gradient-text">Education</span></h2><div className="w-20 h-1 bg-orange-500 mx-auto rounded-full"/></div><div className="max-w-4xl mx-auto">{education.map((edu,i)=><div key={edu.id||i} className="relative">{i!==education.length-1&&<div className="absolute left-8 top-20 bottom-0 w-0.5 bg-orange-500 to-transparent"/>}<div className="glass rounded-2xl p-8 mb-8 ml-0 md:ml-20 card-hover relative education-card"><div className="absolute -left-14 top-8 w-8 h-8 bg-orange-500 rounded-full hidden md:flex items-center justify-center"><FiBook className="text-white"/></div><div className="flex flex-wrap items-start justify-between mb-4 gap-2"><div><h3 className="text-xl font-bold text-white mb-1">{edu.degree}</h3><p className="text-orange-400 font-semibold">{edu.institution}</p></div><div className="glass px-4 py-2 rounded-full"><span className="text-orange-400 font-semibold text-sm">{edu.grade}</span></div></div><div className="flex flex-wrap gap-4 mb-4 text-gray-400 text-sm"><span className="flex items-center gap-2"><FiCalendar/>{edu.duration}</span><span className="flex items-center gap-2"><FiMapPin/>{edu.location}</span></div><p className="text-gray-400 mb-4">{edu.description}</p><h4 className="text-sm text-gray-500 mb-2">Key Courses:</h4><div className="flex flex-wrap gap-2">{(Array.isArray(edu.courses)?edu.courses:[]).map(c=><span key={c} className="px-3 py-1 glass rounded-full text-xs text-gray-300">{c}</span>)}</div></div></div>)}</div></div></section>}
+import { FiCalendar, FiMapPin, FiBook } from "react-icons/fi";
+import { useSiteData } from "../lib/SiteDataContext";
+export default function Education() {
+  const { education } = useSiteData();
+  return (
+    <section id="education" className="py-20 px-6 section-fade gsap-section">
+      <div className="container mx-auto">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">
+            My <span className="gradient-text">Education</span>
+          </h2>
+          <div className="w-20 h-1 bg-orange-500 mx-auto rounded-full" />
+        </div>
+        <div className="max-w-4xl mx-auto">
+          {education.map((edu, i) => (
+            <div key={edu.id || i} className="relative">
+              {i !== education.length - 1 && (
+                <div className="absolute left-8 top-20 bottom-0 w-0.5 bg-orange-500 to-transparent" />
+              )}
+              <div className="glass rounded-2xl p-8 mb-8 ml-0 md:ml-20 card-hover relative education-card">
+                <div className="absolute -left-14 top-8 w-8 h-8 bg-orange-500 rounded-full hidden md:flex items-center justify-center">
+                  <FiBook className="text-white" />
+                </div>
+                <div className="flex flex-wrap items-start justify-between mb-4 gap-2">
+                  <div>
+                    <h3 className="text-xl font-bold text-white mb-1">
+                      {edu.degree}
+                    </h3>
+                    <p className="text-orange-400 font-semibold">
+                      {edu.institution}
+                    </p>
+                  </div>
+                  <div className="glass px-4 py-2 rounded-full">
+                    <span className="text-orange-400 font-semibold text-sm">
+                      {edu.grade}
+                    </span>
+                  </div>
+                </div>
+                <div className="flex flex-wrap gap-4 mb-4 text-gray-400 text-sm">
+                  <span className="flex items-center gap-2">
+                    <FiCalendar />
+                    {edu.duration}
+                  </span>
+                  <span className="flex items-center gap-2">
+                    <FiMapPin />
+                    {edu.location}
+                  </span>
+                </div>
+                <p className="text-gray-400 mb-4">{edu.description}</p>
+                <h4 className="text-sm text-gray-500 mb-2">Key Courses:</h4>
+                <div className="flex flex-wrap gap-2">
+                  {(Array.isArray(edu.courses) ? edu.courses : []).map((c) => (
+                    <span
+                      key={c}
+                      className="px-3 py-1 glass rounded-full text-xs text-gray-300"
+                    >
+                      {c}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}

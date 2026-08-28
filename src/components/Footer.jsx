@@ -1,4 +1,92 @@
-import { FiHeart, FiDownload, FiArrowUp } from 'react-icons/fi'
-import { FaGithub, FaLinkedin, FaTwitter, FaInstagram } from 'react-icons/fa'
-import { useSiteData } from '../lib/SiteDataContext'
-export default function Footer(){const {settings,socials,navLinks}=useSiteData();const icons={github:FaGithub,linkedin:FaLinkedin,twitter:FaTwitter,instagram:FaInstagram};const open=(e)=>{e.preventDefault();window.dispatchEvent(new Event('open-resume'))};return <footer className="glass border-t border-white/5 py-12 px-6"><div className="container mx-auto"><div className="grid md:grid-cols-3 gap-8 mb-8"><div><h3 className="text-2xl font-bold gradient-text mb-4">&lt;Portfolio/&gt;</h3><p className="text-gray-400 text-sm leading-relaxed mb-4">{settings.footerBio}</p><a href="/resume.pdf" onClick={open} className="inline-flex items-center gap-2 px-5 py-2 bg-orange-500 rounded-full text-white text-sm font-semibold"><FiDownload/> Download Resume</a></div><div><h4 className="text-lg font-bold text-white mb-4">Quick Links</h4><ul className="space-y-2">{navLinks.slice(0,4).map(l=><li key={l.id||l.name}><a href={l.href} className="text-gray-400 hover:text-orange-400 text-sm">→ {l.name}</a></li>)}</ul></div><div><h4 className="text-lg font-bold text-white mb-4">Connect With Me</h4><div className="flex gap-3 mb-4">{socials.map(s=>{const Icon=icons[s.icon]||FaGithub;return <a key={s.id||s.name} href={s.url} target="_blank" rel="noopener noreferrer" className="w-10 h-10 glass rounded-lg flex items-center justify-center text-gray-400 hover:text-white"><Icon/></a>})}</div><p className="text-gray-500 text-sm">📧 {settings.email}<br/>📱 {settings.phone}</p></div></div><div className="border-t border-white/5 pt-6 flex flex-col md:flex-row justify-between items-center gap-4"><p className="text-gray-500 text-sm flex items-center gap-1">© {new Date().getFullYear()} {settings.footerCopyright}. Made with <FiHeart className="text-red-500"/> and React.</p><a href="#home" className="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center text-white"><FiArrowUp/></a></div></div></footer>}
+import { FiHeart, FiDownload, FiArrowUp } from "react-icons/fi";
+import { FaGithub, FaLinkedin, FaTwitter, FaInstagram } from "react-icons/fa";
+import { useSiteData } from "../lib/SiteDataContext";
+export default function Footer() {
+  const { settings, socials, navLinks } = useSiteData();
+  const icons = {
+    github: FaGithub,
+    linkedin: FaLinkedin,
+    twitter: FaTwitter,
+    instagram: FaInstagram,
+  };
+  const open = (e) => {
+    e.preventDefault();
+    window.dispatchEvent(new Event("open-resume"));
+  };
+  return (
+    <footer className="glass border-t border-white/5 py-12 px-6">
+      <div className="container mx-auto">
+        <div className="grid md:grid-cols-3 gap-8 mb-8">
+          <div>
+            <h3 className="text-2xl font-bold gradient-text mb-4">
+              &lt;Portfolio/&gt;
+            </h3>
+            <p className="text-gray-400 text-sm leading-relaxed mb-4">
+              {settings.footerBio}
+            </p>
+            <a
+              href="/resume.pdf"
+              onClick={open}
+              className="inline-flex items-center gap-2 px-5 py-2 bg-orange-500 rounded-full text-white text-sm font-semibold"
+            >
+              <FiDownload /> Download Resume
+            </a>
+          </div>
+          <div>
+            <h4 className="text-lg font-bold text-white mb-4">Quick Links</h4>
+            <ul className="space-y-2">
+              {navLinks.slice(0, 4).map((l) => (
+                <li key={l.id || l.name}>
+                  <a
+                    href={l.href}
+                    className="text-gray-400 hover:text-orange-400 text-sm"
+                  >
+                    → {l.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h4 className="text-lg font-bold text-white mb-4">
+              Connect With Me
+            </h4>
+            <div className="flex gap-3 mb-4">
+              {socials.map((s) => {
+                const Icon = icons[s.icon] || FaGithub;
+                return (
+                  <a
+                    key={s.id || s.name}
+                    href={s.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-10 h-10 glass rounded-lg flex items-center justify-center text-gray-400 hover:text-white"
+                  >
+                    <Icon />
+                  </a>
+                );
+              })}
+            </div>
+            <p className="text-gray-500 text-sm">
+              📧 {settings.email}
+              <br />
+              📱 {settings.phone}
+            </p>
+          </div>
+        </div>
+        <div className="border-t border-white/5 pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-gray-500 text-sm flex items-center gap-1">
+            © {new Date().getFullYear()} {settings.footerCopyright}. Made with{" "}
+            <FiHeart className="text-red-500" /> and React.
+          </p>
+          <a
+            href="#home"
+            className="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center text-white"
+          >
+            <FiArrowUp />
+          </a>
+        </div>
+      </div>
+    </footer>
+  );
+}

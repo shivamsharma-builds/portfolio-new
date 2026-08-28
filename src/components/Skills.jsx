@@ -1,4 +1,95 @@
-import { SiReact, SiJavascript, SiPython, SiNodedotjs, SiTailwindcss, SiMongodb, SiGit, SiFigma, SiDocker, SiTypescript } from 'react-icons/si'
-import { useSiteData } from '../lib/SiteDataContext'
-const icons={react:SiReact,javascript:SiJavascript,python:SiPython,node:SiNodedotjs,tailwind:SiTailwindcss,mongodb:SiMongodb,git:SiGit,figma:SiFigma,docker:SiDocker,typescript:SiTypescript}
-export default function Skills(){const {skills,additionalSkills}=useSiteData();const groups=[...new Set((Array.isArray(skills)?skills:[]).map(s=>s.category))];return <section id="skills" className="py-20 px-6 section-fade gsap-section"><div className="container mx-auto"><div className="text-center mb-16"><h2 className="text-4xl md:text-5xl font-bold mb-4">My <span className="gradient-text">Skills</span></h2><div className="w-20 h-1 bg-orange-500 mx-auto rounded-full"/></div><div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">{groups.map(category=><div key={category} className="glass rounded-2xl p-6 card-hover"><h3 className="text-xl font-bold mb-6 text-orange-400">{category}</h3><div className="space-y-5">{(Array.isArray(skills)?skills:[]).filter(s=>s.category===category).map(skill=>{const Icon=icons[skill.icon]||SiReact;return <div key={skill.id||skill.name}><div className="flex items-center justify-between mb-2"><div className="flex items-center gap-2"><Icon className="text-xl text-orange-400"/><span className="text-gray-300">{skill.name}</span></div><span className="text-sm text-gray-500">{skill.level}%</span></div><div className="h-2 bg-gray-800 rounded-full overflow-hidden"><div className="h-full bg-orange-500 rounded-full" style={{width:`${skill.level}%`}}/></div></div>})}</div></div>)}</div><div className="mt-12 glass rounded-2xl p-8"><h3 className="text-xl font-bold mb-6 text-center text-orange-400">Other Skills & Technologies</h3><div className="flex flex-wrap justify-center gap-3">{(Array.isArray(additionalSkills)?additionalSkills:[]).map(s=><span key={s.id||s} className="px-4 py-2 glass rounded-full text-gray-300 text-sm">{s.name||s}</span>)}</div></div></div></section>}
+import {
+  SiReact,
+  SiJavascript,
+  SiPython,
+  SiNodedotjs,
+  SiTailwindcss,
+  SiMongodb,
+  SiGit,
+  SiFigma,
+  SiDocker,
+  SiTypescript,
+} from "react-icons/si";
+import { useSiteData } from "../lib/SiteDataContext";
+const icons = {
+  react: SiReact,
+  javascript: SiJavascript,
+  python: SiPython,
+  node: SiNodedotjs,
+  tailwind: SiTailwindcss,
+  mongodb: SiMongodb,
+  git: SiGit,
+  figma: SiFigma,
+  docker: SiDocker,
+  typescript: SiTypescript,
+};
+export default function Skills() {
+  const { skills, additionalSkills } = useSiteData();
+  const groups = [
+    ...new Set((Array.isArray(skills) ? skills : []).map((s) => s.category)),
+  ];
+  return (
+    <section id="skills" className="py-20 px-6 section-fade gsap-section">
+      <div className="container mx-auto">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">
+            My <span className="gradient-text">Skills</span>
+          </h2>
+          <div className="w-20 h-1 bg-orange-500 mx-auto rounded-full" />
+        </div>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {groups.map((category) => (
+            <div key={category} className="glass rounded-2xl p-6 card-hover">
+              <h3 className="text-xl font-bold mb-6 text-orange-400">
+                {category}
+              </h3>
+              <div className="space-y-5">
+                {(Array.isArray(skills) ? skills : [])
+                  .filter((s) => s.category === category)
+                  .map((skill) => {
+                    const Icon = icons[skill.icon] || SiReact;
+                    return (
+                      <div key={skill.id || skill.name}>
+                        <div className="flex items-center justify-between mb-2">
+                          <div className="flex items-center gap-2">
+                            <Icon className="text-xl text-orange-400" />
+                            <span className="text-gray-300">{skill.name}</span>
+                          </div>
+                          <span className="text-sm text-gray-500">
+                            {skill.level}%
+                          </span>
+                        </div>
+                        <div className="h-2 bg-gray-800 rounded-full overflow-hidden">
+                          <div
+                            className="h-full bg-orange-500 rounded-full"
+                            style={{ width: `${skill.level}%` }}
+                          />
+                        </div>
+                      </div>
+                    );
+                  })}
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="mt-12 glass rounded-2xl p-8">
+          <h3 className="text-xl font-bold mb-6 text-center text-orange-400">
+            Other Skills & Technologies
+          </h3>
+          <div className="flex flex-wrap justify-center gap-3">
+            {(Array.isArray(additionalSkills) ? additionalSkills : []).map(
+              (s) => (
+                <span
+                  key={s.id || s}
+                  className="px-4 py-2 glass rounded-full text-gray-300 text-sm"
+                >
+                  {s.name || s}
+                </span>
+              ),
+            )}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

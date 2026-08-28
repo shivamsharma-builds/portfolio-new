@@ -1,3 +1,66 @@
-import { FiCalendar, FiBriefcase } from 'react-icons/fi'
-import { useSiteData } from '../lib/SiteDataContext'
-export default function Experience(){const {experience}=useSiteData();return <section id="experience" className="py-20 px-6 section-fade gsap-section"><div className="container mx-auto"><div className="text-center mb-16"><h2 className="text-4xl md:text-5xl font-bold mb-4">My <span className="gradient-text">Experience</span></h2><div className="w-20 h-1 bg-orange-500 mx-auto rounded-full"/></div><div className="max-w-4xl mx-auto">{experience.map((exp,i)=><div key={exp.id||i} className="relative">{i!==experience.length-1&&<div className="absolute left-8 top-20 bottom-0 w-0.5 bg-orange-500 to-transparent"/>}<div className="glass rounded-2xl p-8 mb-8 ml-0 md:ml-20 card-hover relative experience-card"><div className="absolute -left-14 top-8 w-8 h-8 bg-orange-500 rounded-full hidden md:flex items-center justify-center"><FiBriefcase className="text-white"/></div><div className="flex flex-wrap items-start justify-between mb-4 gap-2"><div><h3 className="text-xl font-bold text-white mb-1">{exp.role}</h3><p className="text-orange-400 font-semibold">{exp.company}</p></div><span className="px-4 py-1 bg-orange-500/20/20 border border-orange-500/30 rounded-full text-xs text-orange-300">{exp.type}</span></div><div className="flex items-center gap-2 mb-4 text-gray-400 text-sm"><FiCalendar/>{exp.duration}</div><p className="text-gray-400 mb-4">{exp.description}</p><h4 className="text-sm text-gray-500 mb-2">Key Achievements:</h4><ul className="space-y-2">{(Array.isArray(exp.achievements)?exp.achievements:[]).map(a=><li key={a} className="flex items-start gap-2 text-gray-300 text-sm"><span className="text-orange-400 mt-1">▹</span>{a}</li>)}</ul></div></div>)}</div></div></section>}
+import { FiCalendar, FiBriefcase } from "react-icons/fi";
+import { useSiteData } from "../lib/SiteDataContext";
+export default function Experience() {
+  const { experience } = useSiteData();
+  return (
+    <section id="experience" className="py-20 px-6 section-fade gsap-section">
+      <div className="container mx-auto">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">
+            My <span className="gradient-text">Experience</span>
+          </h2>
+          <div className="w-20 h-1 bg-orange-500 mx-auto rounded-full" />
+        </div>
+        <div className="max-w-4xl mx-auto">
+          {experience.map((exp, i) => (
+            <div key={exp.id || i} className="relative">
+              {i !== experience.length - 1 && (
+                <div className="absolute left-8 top-20 bottom-0 w-0.5 bg-orange-500 to-transparent" />
+              )}
+              <div className="glass rounded-2xl p-8 mb-8 ml-0 md:ml-20 card-hover relative experience-card">
+                <div className="absolute -left-14 top-8 w-8 h-8 bg-orange-500 rounded-full hidden md:flex items-center justify-center">
+                  <FiBriefcase className="text-white" />
+                </div>
+                <div className="flex flex-wrap items-start justify-between mb-4 gap-2">
+                  <div>
+                    <h3 className="text-xl font-bold text-white mb-1">
+                      {exp.role}
+                    </h3>
+                    <p className="text-orange-400 font-semibold">
+                      {exp.company}
+                    </p>
+                  </div>
+                  <span className="px-4 py-1 bg-orange-500/20/20 border border-orange-500/30 rounded-full text-xs text-orange-300">
+                    {exp.type}
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 mb-4 text-gray-400 text-sm">
+                  <FiCalendar />
+                  {exp.duration}
+                </div>
+                <p className="text-gray-400 mb-4">{exp.description}</p>
+                <h4 className="text-sm text-gray-500 mb-2">
+                  Key Achievements:
+                </h4>
+                <ul className="space-y-2">
+                  {(Array.isArray(exp.achievements)
+                    ? exp.achievements
+                    : []
+                  ).map((a) => (
+                    <li
+                      key={a}
+                      className="flex items-start gap-2 text-gray-300 text-sm"
+                    >
+                      <span className="text-orange-400 mt-1">▹</span>
+                      {a}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
