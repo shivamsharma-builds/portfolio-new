@@ -1,7 +1,7 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { defaultSite } from '../data/defaultContent'
 
-const SiteDataContext = createContext({ data: defaultSite, loading: true, error: '', refresh: async () => {} })
+const SiteDataContext = createContext({ data: null, loading: true, error: '', refresh: async () => {} })
 
 const arrayOr = (value, fallback) => Array.isArray(value) ? value : fallback
 const objectOr = (value, fallback) => value && typeof value === 'object' && !Array.isArray(value) ? value : fallback
@@ -35,14 +35,20 @@ function mergeSiteData(remote) {
 }
 
 export function SiteDataProvider({ children }) {
-  const [data, setData] = useState(defaultSite)
+  const [data, setData] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
 
   const refresh = useCallback(async () => {
     try {
       setError('')
-      const response = await fetch(`/api/site?ts=${Date.now()}`, { cache: 'no-store', headers: { Accept: 'application/json', 'Cache-Control': 'no-cache' } })
+      const cacheBuster = `${Date.now()}-${Math.random().toString(36).slice(2)}`
+      const response = await fetch(`/api/site?refresh=${encodeURIComponent(cacheBuster)}`, {
+        method: 'GET',
+        cache: 'no-store',
+        credentials: 'same-origin',
+        headers: { Accept: 'application/json', 'Cache-Control': 'no-cache, no-store' },
+      })
       const payload = await response.json().catch(() => null)
       if (!response.ok) throw new Error(payload?.error || `Unable to load site content (${response.status}).`)
       setData(mergeSiteData(payload))
